@@ -252,7 +252,7 @@ async def spotify_dl(Mbot,message: Message):
             try:
                 PForCopy = await message.reply_photo(play['images'][0]['url'],
                 caption=f"📜 **Playlist:** {play['name']}\n📝 **Description:** {play['description']}\n👤 **Owner:** {play['owner']['display_name']}\n❤️ **Followers:** {play['followers']['total']}\n🔢 **Total Track:** {play['tracks']['total']}")
-                )
+                
           #      document= await message.reply_document(play['images'][0]['url'])
             #    sup = 40
             #    if u in PREM:
