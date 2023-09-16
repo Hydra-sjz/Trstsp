@@ -486,7 +486,7 @@ async def spotify_dl(Mbot,message: Message):
                  audi.save()
                  try:
                      await message.reply_chat_action(enums.ChatAction.UPLOAD_AUDIO)
-                     AForCopy = await message.reply_audio(path,performer=f"{song.get('artist')}­",title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__",thumb=thumbnail, parse_mode=enums.ParseMode.MARKDOWN,quote=True,
+                     AForCopy = await message.reply_audio(path,performer=f"{song.get('artist')}­",title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__",thumb=thumbnail, parse_mode=enums.ParseMode.MARKDOWN,quote=True)
                  #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
                  except:
                      pass
