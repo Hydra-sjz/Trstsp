@@ -102,6 +102,19 @@ async def _(c, m):
     finally:
          await m.continue_propagation()
 
+
+@Mbot.on_callback_query(filters.regex(r"next"))
+async def search(Mbot: Mbot, query: CallbackQuery):
+    results = sp.search(query, limit=10)  
+    index = 10
+    for item in results['tracks']['items']:
+        reply_markup.append([InlineKeyboardButton(f"{item['name']} - {item['artists'][0]['name']}", callback_data=f"search_{index}_{results['tracks']['items'][int(index)]['id']}")])
+        index += 10
+        reply_markup.append([InlineKeyboardButton("➡️", callback_data="next")])
+    await K.delete()
+    await message.reply(f"🔎I Found 10 Results For {query}",
+    reply_markup=InlineKeyboardMarkup(reply_markup))
+ 
 @Mbot.on_callback_query(filters.regex(r"search"))
 async def search(Mbot: Mbot, query: CallbackQuery):
    ind, index, track= query.data.split("_")
