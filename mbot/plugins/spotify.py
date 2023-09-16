@@ -217,7 +217,7 @@ async def spotify_dl(Mbot,message: Message):
                 audio.save()
                 audi = File(path)
                 image = Picture() 
-                image.type = 3
+                image.type = 3 se
                 if thumbnail.endswith('png'):
                    mime = 'image/png'
                 else:
@@ -251,7 +251,8 @@ async def spotify_dl(Mbot,message: Message):
             track_no = 1
             try:
                 PForCopy = await message.reply_photo(play['images'][0]['url'],
-                caption=f"📜 **Playlist:** {play['name']}\n📝 **Description:** {play['description']}\n👤 **Owner:** {play['owner']['display_name']}\n❤️ *"Followers:** {play['followers']['total']}\n🔢 **Total Track:** {play['tracks']['total']}") #[IMAGES]({play['images'][0]['url']})\n{play['uri']}
+                caption=f"📜 **Playlist:** {play['name']}\n📝 **Description:** {play['description']}\n👤 **Owner:** {play['owner']['display_name']}\n❤️ *"Followers:** {play['followers']['total']}\n🔢 **Total Track:** {play['tracks']['total']}")
+                )
           #      document= await message.reply_document(play['images'][0]['url'])
             #    sup = 40
             #    if u in PREM:
