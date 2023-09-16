@@ -92,7 +92,6 @@ async def _(c, m):
             reply_markup.append([InlineKeyboardButton(f"{item['name']} - {item['artists'][0]['name']}", callback_data=f"search_{index}_{results['tracks']['items'][int(index)]['id']}")])
             index += 1
         reply_markup.append([InlineKeyboardButton("➡️", callback_data="next")])
-        reply_markup.append([InlineKeyboardButton("❌", callback_data="cancel")])
         await K.delete()
         await message.reply(f"🔎I Found 10 Results For {query}",
         reply_markup=InlineKeyboardMarkup(reply_markup))
