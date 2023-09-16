@@ -329,7 +329,7 @@ async def spotify_dl(Mbot,message: Message):
                 audi.save()
                 try:
                     await message.reply_chat_action(enums.ChatAction.UPLOAD_AUDIO)
-                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__",thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True)
+                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__ » [`{track_no}`]",thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True)
                 #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]])) 
                 except:
                   pass
@@ -421,11 +421,11 @@ async def spotify_dl(Mbot,message: Message):
              art = client.artist(item_id)
              try:
                  PForCopy = await message.reply_photo(art['images'][0]['url'],
-                 caption=f"👤 **Artist:** {art['name']}­\n❤️ **Followers:** {art['followers']['total']}­\n🎶 **Generes:** {art['genres']}­\n🗂 **Category:** {art['type']}­\n❤️ **Popularity:** {art['popularity']}")
+                 caption=f"👤 **Artist:** {art['name']}­\n❤️ **Followers:** {art['followers']['total']}­\n🎶 **Generes:** {art['genres']}­\n🗂 **Category:** {art['type']}­\n📈 **Popularity:** {art['popularity']}")
               #   await message.reply_document(art['images'][0]['url'])
              except Exception as e:
                  pass
-                 await message.reply(f"👤 **Artist:** {art['name']}­\n❤️ **Followers:** {art['followers']['total']}­\n🎶 **Generes:** {art['genres']}­\n🗂 **Category:** {art['type']}­\n❤️ **Popularity:** {art['popularity']}­")     
+                 await message.reply(f"👤 **Artist:** {art['name']}­\n❤️ **Followers:** {art['followers']['total']}­\n🎶 **Generes:** {art['genres']}­\n🗂 **Category:** {art['type']}­\n📈 **Popularity:** {art['popularity']}­")     
              
            #  if u in PREM:
           #      tracks = client.artist_albums(artist_id=item_id)
@@ -565,32 +565,3 @@ async def spotify_dl(Mbot,message: Message):
             pass 
        # await message.reply_text(f"thumbnail and details is temp removed due to  there is  something going on telegram side:)")
            
-@Mbot.on_callback_query(filters.regex(r"feed"))
-async def feedback(Mbot,query):
-      try:
-          K = await query.message.edit(f"Feedback 🏴‍☠️",
-                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Press here", url="https://t.me/dailychannelsbot?start=spotify_downloa_bot")]]))
-          H = print("New Feedback")
-          if BUG:
-             await copy(K,H)
-      except Exception as e:
-          pass
-         
-@Mbot.on_callback_query(filters.regex(r"bug"))                                                                                                          
-async def bug(_,query):
-      try:                                                                                                                                  
-          K = await query.message.edit(f'please report to the dev say "private version" with above  error occurred message')
-          await sleep(2.3)
-          H = await query.message.edit(f"Bug Report 🪲",
-                  reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Report to dev ", url="https://t.me/masterolic")]]))
-          if BUG:
-             await copy(K,H)
-      except Exception as e:
-          pass
-          print(e)
-
-@Mbot.on_callback_query(filters.regex(r"cancel"))                                                                                                          
-async def bug(_,query):
-          await sleep(0.2)
-          await query.message.delete()
-          await query.answer("closed❌")
