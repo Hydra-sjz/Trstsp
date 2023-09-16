@@ -21,44 +21,37 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """ 
-from pyrogram.errors import FloodWait,Forbidden,UserIsBlocked,MessageNotModified,ChatWriteForbidden, SlowmodeWait 
-from asyncio import sleep
-#from mbot.utils.progress import progress
-import time
-from mbot import AUTH_CHATS, LOGGER, Mbot,LOG_GROUP,BUG
+from pyrogram.errors import FloodWait,Forbidden,UserIsBlocked,MessageNotModified,ChatWriteForbidden, SlowmodeWait
 from pyrogram import filters,enums
-from mbot.utils.mainhelper import parse_spotify_url,fetch_spotify_track,download_songs,thumb_down,copy,forward 
-from mbot.utils.ytdl import getIds,ytdl_down,audio_opt
-from spotipy import Spotify
-from spotipy.oauth2 import SpotifyClientCredentials
-#import psutil
-from os import mkdir
-from os import environ
-from shutil import rmtree
-#from Script import script
-from random import randint
-#import random
-#import eyed3 
-from mutagen import File
-from mutagen.flac import FLAC ,Picture
-from lyricsgenius import Genius 
 from pyrogram.types import Message
 from pyrogram.errors.rpc_error import RPCError
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import Client, filters
-#import psutil
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors.exceptions.bad_request_400 import MessageTooLong, PeerIdInvalid
-#from info import  ADMINS, LOG_CHANNEL, SUPPORT_CHAT, MELCOW_NEW_USERS
-#from database.users_chats_db import db
-#from database.ia_filterdb import Media
-#from utils import temp
-#from Script import script
 from pyrogram.errors import ChatAdminRequired
-from mbot import BUG
+
+from asyncio import sleep
+import time
+from os import mkdir
+from os import environ
+from shutil import rmtree
+from random import randint
+from mutagen import File
+from spotipy import Spotify
+from spotipy.oauth2 import SpotifyClientCredentials
+from mutagen.flac import FLAC ,Picture
+from lyricsgenius import Genius 
 from requests import head
-ADMINS = 1794941609
 from requests.exceptions import MissingSchema
+
+from mbot import BUG
+from mbot import AUTH_CHATS, LOGGER, Mbot,LOG_GROUP,BUG
+from mbot.utils.mainhelper import parse_spotify_url,fetch_spotify_track,download_songs,thumb_down,copy,forward 
+from mbot.utils.ytdl import getIds,ytdl_down,audio_opt
+
+
+ADMINS = 1794941609
 client = Spotify(auth_manager=SpotifyClientCredentials())
 PICS = ("mbot/1162775.jpg mbot/danny-howe-bn-D2bCvpik-unsplash.jpg mbot/saurabh-gill-38RthwbB3nE-unsplash.jpg").split()
 MAIN = bool(environ.get('MAIN', None))
@@ -67,10 +60,12 @@ LOG_TEXT_P = """
 ID - <code>{}</code>
 Name - {}
 """
+
+
 @Mbot.on_message(filters.incoming & filters.regex(r'https?://open.spotify.com[^\s]+') | filters.incoming & filters.regex(r'https?://spotify.link[^\s]+'), group=-2)
 async def spotify_dl(Mbot,message: Message):
     if MAIN:
-       await message.reply_text(f"Bot Is Under Maintenance ⚠️")
+       await message.reply_text(f"Bot Is Under Maintenance.")
        return
     link = message.matches[0].group(0)
     if "https://spotify.link" in link:
@@ -78,13 +73,13 @@ async def spotify_dl(Mbot,message: Message):
     if "https://www.deezer.com" in link:
        return
     if "https://youtu.be" in link:
-          return await message.reply("301: Use @y2mate_api_bot Insted Of Me 🚫")
+          return await message.reply("301: Use @YouTubeDownloader7Bot Insted Of Me.")
     try:
         parsed_item = await parse_spotify_url(link)
         item_type, item_id = parsed_item[0],parsed_item[1]
     except Exception as e:
         pass
-        cr =  await message.reply("417: Not Critical, Retrying Again  🚫")
+        cr =  await message.reply("417: Not Critical, Retrying Again.")
         await  Mbot.send_message(BUG,f" Private r: Unsupported [URI](link) Not critical {message.chat.id}  {message.from_user.id} {message.from_user.mention}")   
         try:
             link = head(link).headers['location']
@@ -93,7 +88,7 @@ async def spotify_dl(Mbot,message: Message):
         except Exception as e:
             pass 
             await  Mbot.send_message(BUG,f" Private r: Unsupported [URI](link) Failed twice {message.chat.id}  {message.from_user.id} {message.from_user.mention}")
-            return await cr.edit(f"501: This URI Is Not Supported ⚠")
+            return await cr.edit(f"501: This URI Is Not Supported.")
     if message.text.startswith("/thumb"):
        try:
           await Mbot.send_message(BUG,f"Thumb download requested from {message.from_user.mention}")
@@ -112,7 +107,7 @@ async def spotify_dl(Mbot,message: Message):
                await message.reply_document(art['images'][0]['url'])
        except Exception as e:
            pass
-           await message.reply("404: sorry, thumbnail download is not available for this track 😔")
+           await message.reply("404: sorry, thumbnail download is not available for this track.")
            await Mbot.send_message(BUG,f" thumb 400 {e}")
        return 
     if message.text.startswith("/preview"):
@@ -123,14 +118,14 @@ async def spotify_dl(Mbot,message: Message):
                  await  message.reply_audio(f"{item.get('preview_url')}")
              except Exception as e:
                  pass
-                 await message.reply("404: sorry, audio preview is not available for this track 😔")
+                 await message.reply("404: sorry, audio preview is not available for this track.")
                  await Mbot.send_message(BUG,e)
           return 
     try: 
        if item_type in ["https:","http:"]:
-          cr =  await message.reply("417: Not Critical, Retrying Again  🚫")
+          cr =  await message.reply("417: Not Critical, Retrying Again.")
           await sleep(1)
-          return await cr.edit(f"501: This URI Is Not Supported ⚠")
+          return await cr.edit(f"501: This URI Is Not Supported.")
     except Exception as e:
         pass
         await  Mbot.send_message(BUG,f" Private r: Unsupported http [URI](link) Failed twice {message.chat.id}  {message.from_user.id} {message.from_user.mention}")     
@@ -138,15 +133,15 @@ async def spotify_dl(Mbot,message: Message):
     randomdir = f"/tmp/{str(randint(1,100000000))}"
     mkdir(randomdir)
     try:
-        m = await message.reply_text(f"⏳")
+        m = await message.reply_text(f"🔎")
         await message.reply_chat_action(enums.ChatAction.TYPING)
     except ChatWriteForbidden:
         pass
         chat=message.chat.id
         await Mbot.leave_chat(chat)
-        k = await Mbot.send_message(-1001744816254,f"{chat} {message.chat.username} or {message.from_user.id}")
+        k = await Mbot.send_message(-1001784386455,f"{chat} {message.chat.username} or {message.from_user.id}")
         await  k.pin()
-        sp = f"I have left from {chat} reason: I Am Not  Admin "
+        sp = f"I have left from {chat} reason: I Am Not  Admin."
         await Mbot.send_message(message.from_user.id,f"{sp}") 
     try:
         if item_type in ["show", "episode"]:
@@ -168,19 +163,19 @@ async def spotify_dl(Mbot,message: Message):
             try:
                 if not item:
            #         await message.reply_chat_action(enums.ChatAction.UPLOAD_PHOTO)
-                    PForCopy = await message.reply_photo(song.get('cover'),caption=f"🎧 Title : `{song['name']}`\n🎤 Artist : `{song['artist']}`\n💽 Album : `{song['album']}`\n🗓 Release Year: `{song['year']}`\n\n[IMAGE]({song.get('cover')})\nTrack id:`{song['deezer_id']}`")
+                    PForCopy = await message.reply_photo(song.get('cover'),caption=f"🎧 **Title:** {song['name']}\n👤 **Artist:** {song['artist']}\n💽 **Album:** `{song['album']}`\n🗓 **Release Year:** {song['year']}") #[IMAGE]({song.get('cover')})\nTrack id:`{song['deezer_id']}`
            #         await message.reply_chat_action(enums.ChatAction.UPLOAD_DOCUMENT)
             #        document= await message.reply_document(song.get('cover'))  
                 else:
-                     PForCopy = await message.reply_photo(item['album']['images'][0]['url'],caption=f"🎧 Title : `{song['name']}­­`\n🎤 Artist : `{song['artist']}`­\n💽 Album : `{song['album']}`\n🗓 Release Year: `{song['year']}`\n❗️Is Local:`{item['is_local']}`\n 🌐ISRC: `{item['external_ids']['isrc']}`\n\n[IMAGE]({item['album']['images'][0]['url']})\nTrack id:`{song['deezer_id']}`",
-                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
+                     PForCopy = await message.reply_photo(item['album']['images'][0]['url'],caption=f"🎧 **Title:** {song['name']}­­\n👤 **Artist:** {song['artist']}\n💽 **Album:** {song['album']}\n🗓 **Release Year:** {song['year']}") #❗️Is Local:`{item['is_local']}`\n 🌐ISRC: `{item['external_ids']['isrc']}`\n\n[IMAGE]({item['album']['images'][0]['url']})\nTrack id:`{song['deezer_id']}`.  
+                     #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
               #       document= await message.reply_document(alb['images'][0]['url'],
                 #     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
               # await message.reply_audio(f"{item.get('preview_url')}")
             except:
                 pass
          #       await message.reply_chat_action(enums.ChatAction.TYPING)
-                PForCopy = await message.reply_text(f"🎧 Title : `{song['name']}`\n­🎤 Artist : `{song['artist']}`\n💽 Album : `{song['album']}`\n🗓 Release Year: `{song['year']}`\n\n[IMAGE]({song.get('cover')})\ntrack id:`{song['deezer_id']}`")
+                PForCopy = await message.reply_text(f"🎧 **Title:** {song['name']}\n­👤 **Artist:** {song['artist']}\n💽 **Album:** {song['album']}\n🗓 **Release Year:** {song['year']}") #\n\n[IMAGE]({song.get('cover')})\ntrack id:`{song['deezer_id']}`
        #     try:
        #         await message.reply_audio(f"{item.get('preview_url')}",
        #         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
@@ -238,8 +233,8 @@ async def spotify_dl(Mbot,message: Message):
             try:
                 dForChat = await message.reply_chat_action(enums.ChatAction.UPLOAD_AUDIO)
               #    sleep(1)
-                AForCopy = await message.reply_audio(path,performer=f"{song.get('artist')}­",title=f"{song.get('name')} - {song.get('artist')}",caption=f"[{song.get('name')}](https://open.spotify.com/track/{song.get('deezer_id')}) | {song.get('album')} - {song.get('artist')}",thumb=thumbnail, parse_mode=enums.ParseMode.MARKDOWN,quote=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
+                AForCopy = await message.reply_audio(path,performer=f"{song.get('artist')}­",title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__",thumb=thumbnail, parse_mode=enums.ParseMode.MARKDOWN,quote=True)
+            #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
             except:
                 pass
             if LOG_GROUP:
@@ -256,7 +251,7 @@ async def spotify_dl(Mbot,message: Message):
             track_no = 1
             try:
                 PForCopy = await message.reply_photo(play['images'][0]['url'],
-                caption=f"▶️Playlist:{play['name']}\n📝Description:{play['description']}\n👤Owner:{play['owner']['display_name']}\n❤️Followers:{play['followers']['total']}\n🔢 Total Track:{play['tracks']['total']}\n\n[IMAGES]({play['images'][0]['url']})\n{play['uri']}")
+                caption=f"📜 **Playlist:** {play['name']}\n📝 **Description:** {play['description']}\n👤 **Owner:** {play['owner']['display_name']}\n❤️ *"Followers:** {play['followers']['total']}\n🔢 **Total Track:** {play['tracks']['total']}") #[IMAGES]({play['images'][0]['url']})\n{play['uri']}
           #      document= await message.reply_document(play['images'][0]['url'])
             #    sup = 40
             #    if u in PREM:
