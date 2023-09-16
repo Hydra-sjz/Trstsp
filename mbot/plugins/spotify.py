@@ -251,7 +251,7 @@ async def spotify_dl(Mbot,message: Message):
             track_no = 1
             try:
                 PForCopy = await message.reply_photo(play['images'][0]['url'],
-                caption=f"📜 **Playlist:** {play['name']}\n📝 **Description:** {play['description']}\n👤 **Owner:** {play['owner']['display_name']}\n❤️ *"Followers:** {play['followers']['total']}\n🔢 **Total Track:** {play['tracks']['total']}")
+                caption=f"📜 **Playlist:** {play['name']}\n📝 **Description:** {play['description']}\n👤 **Owner:** {play['owner']['display_name']}\n❤️ **Followers:** {play['followers']['total']}\n🔢 **Total Track:** {play['tracks']['total']}")
                 )
           #      document= await message.reply_document(play['images'][0]['url'])
             #    sup = 40
@@ -263,7 +263,7 @@ async def spotify_dl(Mbot,message: Message):
          #          await message.reply(f"trying to send first 40 tracks of {play['name']} total {re}")     
             except Exception as e:
                 pass
-                PForCopy = await message.reply(f"▶️Playlist:{play['name']}\n📝Description:{play['description']}\n👤Owner:{play['owner']['display_name']}\n❤️Followers:{play['followers']['total']}\n🔢 Total Track:{play['tracks']['total']}\n\n[IMAGES]({play['images'][0]['url']})\n{play['tracks']['uri']}")
+                PForCopy = await message.reply(f"📜 **Playlist:** {play['name']}\n📝 **Description:** {play['description']}\n👤 **Owner:** {play['owner']['display_name']}\n❤️ **Followers:** {play['followers']['total']}\n🔢 **Total Track:** {play['tracks']['total']}") #\n\n[IMAGES]({play['images'][0]['url']})\n{play['tracks']['uri']}
                 await message.reply("are you sure it's a valid playlist 🤨?")
             
             for track in tracks['items']:
@@ -329,8 +329,8 @@ async def spotify_dl(Mbot,message: Message):
                 audi.save()
                 try:
                     await message.reply_chat_action(enums.ChatAction.UPLOAD_AUDIO)
-                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"[{song.get('name')}](https://open.spotify.com/track/{song.get('deezer_id')}) | {song.get('album')} - {song.get('artist')}",thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True,
-                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]])) 
+                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__",thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True)
+                #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]])) 
                 except:
                   pass
                 track_no += 1
@@ -346,12 +346,12 @@ async def spotify_dl(Mbot,message: Message):
             alb = client.album(album_id=item_id,)
             try:
                 PForCopy = await message.reply_photo(alb['images'][0]['url'],
-                caption=f"💽Album: {alb['name']}\n👥Artists: {alb['artists'][0]['name']}\n🎧Total tracks{alb['total_tracks']}\n🗂Category: {alb['album_type']}\n📆Published on: {alb['release_date']}\n\n[IMAGE]({alb['images'][0]['url']})\n{alb['uri']}")
+                caption=f"💽 **Album:** {alb['name']}\n👥 **Artists:** {alb['artists'][0]['name']}\n🎧 **Total tracks:** {alb['total_tracks']}\n🗂 **Category:** {alb['album_type']}\n📆 **Published on:** {alb['release_date']}") #\n\n[IMAGE]({alb['images'][0]['url']})\n{alb['uri']}
            #     await message.reply_document(alb['images'][0]['url'])
             except Exception as e:
                 pass
                 err = print(e)
-                PForCopy = await message.reply(f"💽Album: {alb['name']}\n👥Artists: {alb['artists'][0]['name']}\n🎧Total tracks{alb['total_tracks']}\n🗂Category: {alb['album_type']}\n📆Published on: {alb['release_date']}\n\n[IMAGE]({alb['images'][0]['url']})\n{alb['uri']}")
+                PForCopy = await message.reply(f"💽 **Album:** {alb['name']}\n👥 **Artists:** {alb['artists'][0]['name']}\n🎧 **Total tracks:** {alb['total_tracks']}\n🗂 **Category:** {alb['album_type']}\n📆 **Published on:** {alb['release_date']}") #\n\n[IMAGE]({alb['images'][0]['url']})\n{alb['uri']}
             for track in alb['tracks']['items']:
                 item = client.track(track_id=track['id'])
                 song = await fetch_spotify_track(client,track.get('id'))
@@ -407,8 +407,8 @@ async def spotify_dl(Mbot,message: Message):
                 audi.add_picture(image)
                 audi.save()
                 try:
-                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"[{song.get('name')}](https://open.spotify.com/track/{song.get('deezer_id')}) | {song.get('album')} - {song.get('artist')}",thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True,
-                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
+                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)",artist,thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True)
+                #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
                 except:
                     pass 
                 if LOG_GROUP:
@@ -421,11 +421,11 @@ async def spotify_dl(Mbot,message: Message):
              art = client.artist(item_id)
              try:
                  PForCopy = await message.reply_photo(art['images'][0]['url'],
-                 caption=f"👤Artist: **{art['name']}­**\n❤️Followers:{art['followers']['total']}­\n🎶Generes:{art['genres']}­\n🗂Category:{art['type']}­\n❤️Popularity:{art['popularity']}­\n\n[IMAGE]({art['images'][0]['url']})\nArtist id:`{art['id']}`")
+                 caption=f"👤 **Artist:** {art['name']}­\n❤️ **Followers:** {art['followers']['total']}­\n🎶 **Generes:** {art['genres']}­\n🗂 **Category:** {art['type']}­\n❤️ **Popularity:** {art['popularity']}")
               #   await message.reply_document(art['images'][0]['url'])
              except Exception as e:
                  pass
-                 await message.reply(f"👤Artist: **{art['name']}­**\n❤️Followers:{art['followers']['total']}­\n🎶Generes:{art['genres']}­\n🗂Category:{art['type']}­\n❤️Popularity:{art['popularity']}­\n\n[IMAGE]({art['images'][0]['url']})\nArtist id:`{art['id']}`")     
+                 await message.reply(f"👤 **Artist:** {art['name']}­\n❤️ **Followers:** {art['followers']['total']}­\n🎶 **Generes:** {art['genres']}­\n🗂 **Category:** {art['type']}­\n❤️ **Popularity:** {art['popularity']}­")     
              
            #  if u in PREM:
           #      tracks = client.artist_albums(artist_id=item_id)
