@@ -91,7 +91,8 @@ async def _(c, m):
         for item in results['tracks']['items']:
             reply_markup.append([InlineKeyboardButton(f"{item['name']} - {item['artists'][0]['name']}", callback_data=f"search_{index}_{results['tracks']['items'][int(index)]['id']}")])
             index += 1
-        reply_markup.append([InlineKeyboardButton("➡️", callback_data="next")])
+	reply_markup.append([InlineKeyboardButton("❌", callback_data="close")])
+        reply_markup.append([InlineKeyboardButton("❌", callback_data="close")])
         await K.delete()
         await message.reply(f"🔎I Found 10 Results For {query}",
         reply_markup=InlineKeyboardMarkup(reply_markup))
@@ -113,7 +114,7 @@ async def search(Mbot: Mbot, query: CallbackQuery):
       item = sp.track(track_id=track)
       thumbnail = await thumb_down(item['album']['images'][0]['url'],song.get('deezer_id'))
       PForCopy = await query.message.reply_photo(thumbnail,caption=f"🎧 Title : `{song['name']}­­`\n🎤 Artist : `{song['artist']}`­\n💽 Album : `{song['album']}`\n🗓 Release Year: `{song['year']}`\n❗️Is Local:`{item['is_local']}`\n 🌐ISRC: `{item['external_ids']['isrc']}`\n\n[IMAGE]({item['album']['images'][0]['url']})\nTrack id:`{song['deezer_id']}`",
-                     #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
+                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
       randomdir = f"/tmp/{str(randint(1,100000000))}"
       mkdir(randomdir)
       run = True 
