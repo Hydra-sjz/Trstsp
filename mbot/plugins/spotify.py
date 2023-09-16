@@ -217,7 +217,7 @@ async def spotify_dl(Mbot,message: Message):
                 audio.save()
                 audi = File(path)
                 image = Picture() 
-                image.type = 3 se
+                image.type = 3 
                 if thumbnail.endswith('png'):
                    mime = 'image/png'
                 else:
