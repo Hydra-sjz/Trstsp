@@ -407,7 +407,7 @@ async def spotify_dl(Mbot,message: Message):
                 audi.add_picture(image)
                 audi.save()
                 try:
-                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)",artist,thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True)
+                    AForCopy = await message.reply_audio(path,performer=song.get('artist'),title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__",thumb=thumbnail,parse_mode=enums.ParseMode.MARKDOWN,quote=True)
                 #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
                 except:
                     pass 
@@ -486,18 +486,18 @@ async def spotify_dl(Mbot,message: Message):
                  audi.save()
                  try:
                      await message.reply_chat_action(enums.ChatAction.UPLOAD_AUDIO)
-                     AForCopy = await message.reply_audio(path,performer=f"{song.get('artist')}­",title=f"{song.get('name')} - {song.get('artist')}",caption=f"[{song.get('name')}](https://open.spotify.com/track/{song.get('deezer_id')}) | {song.get('album')} - {song.get('artist')}",thumb=thumbnail, parse_mode=enums.ParseMode.MARKDOWN,quote=True,
-                 reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
+                     AForCopy = await message.reply_audio(path,performer=f"{song.get('artist')}­",title=f"{song.get('name')} - {song.get('artist')}",caption=f"__[song.link](https://open.spotify.com/track/{song.get('deezer_id')}) | [via](http://t.me/Musicx_dlbot)__",thumb=thumbnail, parse_mode=enums.ParseMode.MARKDOWN,quote=True,
+                 #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❌", callback_data="cancel")]]))
                  except:
                      pass
                  if LOG_GROUP:
                     await forward(PForCopy,AForCopy)
     except MissingSchema:
         pass
-        await message.reply("400: Are You Sure It's valid URL🤨?")
+        await message.reply("400: Are You Sure It's valid URL?")
     except RPCError:
         pass
-        await message.reply(f"500: telegram says 500 error,so please try again later.❣️")
+        await message.reply(f"500: telegram says 500 error,so please try again later.")
     except ChatWriteForbidden:
         pass
         chat=message.chat.id
@@ -519,12 +519,12 @@ async def spotify_dl(Mbot,message: Message):
         k.pin()
     except (FileNotFoundError, OSError):
         pass
-        await message.reply('Sorry, We Are Unable To Procced It 🤕❣️')
+        await message.reply('Sorry, We Are Unable To Procced It.')
     except BrokenPipeError:
         pass
         K = await  Mbot.send_message(BUG,f" private r: broken {message.chat.id}  {message.from_user.id} {message.from_user.mention}")
     except Forbidden:
-       T = await message.reply_text(f"Dude check weather I have enough rights😎⚠️")
+       T = await message.reply_text(f"Dude check weather I have enough rights")
     except UnboundLocalError:
        pass
   #     T = await message.reply_text(f"[{song.get('name')} - {song.get('artist')}](https://open.spotify.com/track/{song.get('deezer_id')}) Track Not Found ⚠️")
@@ -549,7 +549,7 @@ async def spotify_dl(Mbot,message: Message):
      #   H = await message.reply_text(f"Done✅",   
      #        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Error Detected", callback_data="bug")]]))
     #    await message.reply_text(f"try: `/saavn {song.get('name')}`")
-        await message.reply('503: Sorry, We Are Unable To Procced It 🤕❣️')
+        await message.reply('503: Sorry, We Are Unable To Procced It.')
     finally:
         await sleep(2.0)
         try:
@@ -557,9 +557,9 @@ async def spotify_dl(Mbot,message: Message):
         except:
             pass
         try:
-            await message.reply_text(f"Done✅",   
-         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Feedback", callback_data="feed")]]))
-            await message.reply_text(f"Check out @spotify_downloa (music)  @spotifynewss(News)")
+            await message.reply_text(f"Done✅",
+         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Done ✅", callback_data="done")]]))
+            #await message.reply_text(f"Check out @spotify_downloa (music)  @spotifynewss(News)")
             await m.delete()
         except:
             pass 
